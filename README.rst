@@ -66,7 +66,8 @@ model.plot()
 model.accuracy(test_set = test)
 
 
-
+About:
+----------
 * Free software: MIT license
 * Documentation: https://easyforecast.readthedocs.io.
 
