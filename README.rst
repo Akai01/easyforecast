@@ -23,6 +23,7 @@ ARIMA.auto_arima is an implementation of R`s forecast package auto.arima().
 
 
 ### Install directly from Github:
+
 pip install git+https://github.com/Akai01/easyforecast.git
 
 * Free software: MIT license
