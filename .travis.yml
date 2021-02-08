@@ -11,3 +11,7 @@ deploy:
   username: akai01
   password:
     secure: MLx5lWTJFKX7Aq4ZYT6wI+g3nHEKNYIsZUwnYBPC1iI4HWP1aIm/Ih1eOF3y85EXj/RQJ/3IzGTIWYgiMZSY9mJzA1rtWj05f3JMEmQ3s7lI9si8N9v1TPEfVnT8SutrFjWgO4yJ7cLFqPxE+b7A/gnhHECx7PDV3HCw4fWd1HWuxE/IVMS/UT6mpl7Hi0CD1RDdMMsKv0XD7pSPO1jx/xjAqL9MosyerOpnDN0A++bOar50dr30WZcW2s+Fh9BO7FgPxeDTllW4D6sMKWlofU2qVHa52/PxwK8evPylP6JiextHww5PbOEDlk4yjg9eYtnMWdquLfDgxsfImLV8HRMA2Fn/k+xeGypA6USLSXBZogGE2lvK1jncATrZ4ku4no9c+j7Hyh+OZ4yssC5TJCr29lVAA4qnqcp8CyYMn/FAyA4IgLT9alR9jyWmPUXze+iIifCCi4FoNGZmlf5J9gx3LTSxWfpE9eW+XEp4Ht+zjIhCOogZjQc/W+Xs9DgN69ObeOUrYI/3yAIeh9BkRHSpVcaWOEQtz9rGha8h8sFvNgSPGbpazcRHQ6+nhlVxqq12/5bQmozc5OEpGoc6Q7/2FLI2jcRTZfp6fL2EI226zK6X8akE9/bUoBKc2PagxlUFlvhIR9o3WbEC7aiclarDDJAN467CCgAJvic5Fj0=
+  on:
+    tags: true
+    repo: akai01/easyforecast
+    python: 3.8
