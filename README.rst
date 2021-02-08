@@ -32,6 +32,7 @@ ARAR example
 ============================
 
 import pandas as pd
+
 from easyforecast.arar import ARAR
 
 df = pd.read_csv("https://raw.githubusercontent.com/Akai01/example-time-series-datasets/main/Data/retail.csv", sep= ",")
@@ -39,18 +40,27 @@ df = pd.read_csv("https://raw.githubusercontent.com/Akai01/example-time-series-d
 df_sub = df[['date', 'series_38']]
 
 df_sub.columns = ["ds", "y"]
+
 df_sub.head()
+
 train = df_sub[:-12]
+
 test = df_sub[-12:]
+
 test_series = pd.DataFrame(pd.array(test['y']), index= pd.to_datetime( test["ds"]))
+
 test_series.columns = ["test"]
+
 train.head()
 
 model = ARAR(train, h = 12, freq = "MS")
+
 model = model.forecast()
+
 model.get_forecast()
 
 test_series.plot()
+
 model.plot()
 
 model.accuracy(test_set = test)
