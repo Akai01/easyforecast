@@ -18,6 +18,9 @@ Easy Forecast
 
 Time series forecastin in Python
 
+The easyforecast is still under developement, however ARAR and ARIMA models are working.
+ARIMA.auto_arima is an implementation of R`s forecast package auto.arima().
+
 
 * Free software: MIT license
 * Documentation: https://easyforecast.readthedocs.io.
