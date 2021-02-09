@@ -6,7 +6,7 @@
 import unittest
 from click.testing import CliRunner
 
-from easyforecast import easyforecast
+#from easyforecast import easyforecast
 from easyforecast import cli
 
 
