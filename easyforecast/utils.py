@@ -15,12 +15,7 @@ def autocovariance(x, maxlag = 40):
     Args:
         x: A time series as a numpy array
         maxlag: Maximum lag 
-        
-    Returns:
-        An array
     
-    Note:
-        It is for internal usage.
     
     """
     n = len(x)
@@ -100,21 +95,6 @@ def ndiffs(x, alpha = 0.05, max_lags = None, max_d = 2):
 
 
 def nsdiffs(x, alpha = 0.05, m = None, max_D = 1):
-    """ 
-    Number of seasonal-differences required to make a given time series 
-    stationary.
-    
-    Description: 
-        Functions to estimate the number of differences required to make a 
-        given time series stationary. ndiffs estimates the number of first 
-        differences necessary.
-        
-    Args:
-        x : A univariate time series
-        alpha : Level of the test, possible values range from 0.01 to 0.1.
-        m : Length of seasonal period
-        max.d : Maximum number of non-seasonal differences allowed
-        """
     D = 0
     if alpha < 0.01:
         print("Specified alpha value is less than the minimum, setting alpha=0.01")
@@ -152,8 +132,8 @@ def accuracy(actual, pred):
         
         
         Args:
-            actual : A numpy array same dim as pred
-            pred : A numpy array same dim as actual
+            actual : A dataframe same length as forecast horizon 'h' and same 
+            structure as imput dataframe 'df'.
             
         Returns:
             Dict[str, str]: with following values:

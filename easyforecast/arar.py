@@ -27,10 +27,6 @@ class ARAR:
             
         
         References:
-            PARZEN E. 1982.
-            ARARMA Models for Time Series Analysis and Forecasting, 
-            Journal of Forecasting, Vol. I , 67-82
-            
             Brockwell, Peter J., and Richard A. Davis. 
             Introduction to Time Series and Forecasting. 
             Chapter 10. 2nd ed. Springer, 2002
@@ -51,7 +47,8 @@ class ARAR:
             freq: The frequency of the data
         
         Returns:
-            An object class of easyforecast.arar.ARAR
+            h ahead forecast and prediction intervals at 95 and 80 confidence 
+            interval.
             
             """
         self.y = np.array(df["y"])
@@ -66,10 +63,10 @@ class ARAR:
         Forecast a univariate timeseries using ARAR algorithm.
         
         Args:
-            None
+            No
         
         Returns:
-            An object class of easyforecast.arar.ARAR
+            A ARAR model object.
         
         """
         h = self.h
@@ -174,20 +171,6 @@ class ARAR:
         return self
 
     def get_forecast(self):
-        """
-        Get forecasted values as a data frame
-        
-        Args:
-            None
-        
-        Returns:
-            A pandas data frame with following variables:
-                *mean, 
-                *upper_95, 
-                *upper_80,
-                *ower_95,
-                *lower_80
-            """
         out = pd.DataFrame(
             {
              "mean":self.mean, 
