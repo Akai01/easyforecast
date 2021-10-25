@@ -20,7 +20,7 @@ Time series forecastin in Python
 
 
 * Free software: MIT license
-* Documentation: https://easyforecast.readthedocs.io.
+* Documentation: https://easyforecast.readthedocs.io/en/latest/
 
 * The usage:
 
