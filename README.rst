@@ -43,23 +43,24 @@ Example of ARAR and ARIMA.auto_arima::
     train.head()
     
     # forecast using ARAR model
-    model1 = ARAR(train, h = 12, freq = "MS")
-    model1 = model1.forecast()
-    model1.get_forecast()
-    model1.accuracy(test_set = test)
+    arar = ARAR(train, h = 12, freq = "MS")
+    arar.forecast()
+    arar.get_forecast()
+    arar.accuracy(test_set = test)
     
     test_series.plot() 
-    model1.plot()
+    arar.plot()
     
     # forecast using auto_arima
     
     from easyforecast.arima import ARIMA
-    model2 = ARIMA(train, freq = "MS")
-    model2 = model2.auto_arima(m = 12, ic = "aicc")
-    
-    model2 = model2.forecast(h = 12)
-    model2.get_forecast()
-    model2.accuracy(test_set = test)
+    arima = ARIMA(train, freq = "MS") 
+    arima.auto_arima(m = 12, ic = "aicc")
+    arima.forecast(h = 12)
+    arima.get_forecast()
+    arima.accuracy(test_set = test)
+    test_series.plot() 
+    arima.plot()
 
 
 Features

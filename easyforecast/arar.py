@@ -1,14 +1,6 @@
-
-"""
-Created on Fri Jan 29 09:57:02 2021
-
-@author: Resul Akay
-"""
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from easyforecast.utils import autocovariance
-from easyforecast.utils import accuracy as accuracy_util
 
 class ARAR:
     """
@@ -23,6 +15,8 @@ class ARAR:
             freq: str
                 The frequency of the data should be a pandas freq strings.
                 See: <https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases>
+            max_lag : int
+                Maximum lag for autocorelation function
                 
             
         
@@ -32,9 +26,30 @@ class ARAR:
             Chapter 10. 2nd ed. Springer, 2002
             
             Weigt George (2018), 
-            itsmr: Time Series Analysis Using the Innovations Algorithm. 
+            itsmr: Time Series Analysis Using the Innovations Algorithm.
+        Examples:
+            from easyforecast.arar import ARAR
+            import pandas as pd
+            df = pd.read_csv("https://raw.githubusercontent.com/Akai01/example-time-series-datasets/main/Data/retail.csv", sep= ",")
+            df.head()    
+            df_sub = df[['date', 'series_38']] 
+            df_sub.columns = ["ds", "y"] 
+            df_sub.head()
+            train = df_sub[:-12]
+            test = df_sub[-12:]
+            test_series = pd.DataFrame(pd.array(test['y']), index= pd.to_datetime( test["ds"]))
+            test_series.columns = ["test"]
+            train.head()
+            
+            # forecast using ARAR model
+            
+            model = ARAR(train, fh = 12, freq = "MS", max_lag= 26)
+            model.forecast()
+            model.get_forecast()
+            model.accuracy(test_set = test)
+            model.plot()
     """
-    def __init__(self, df, h, freq):
+    def __init__(self, df, h, freq, max_lag = 26):
         
         """
         Initiates ARAR algorithm to forecast a univariate time series
@@ -45,6 +60,7 @@ class ARAR:
                 ds the date column and y the univariate time series.
             h: An integer to specify forecast horizon
             freq: The frequency of the data
+            max_lag: Maximum lag for autocorelation function
         
         Returns:
             h ahead forecast and prediction intervals at 95 and 80 confidence 
@@ -56,6 +72,7 @@ class ARAR:
         self.h = h
         self.freq = freq
         self.df = df
+        self.max_lag = max_lag
         
 
     def forecast(self):
@@ -110,7 +127,7 @@ class ARAR:
         S = y
         Sbar = np.mean(S)
         X = S - Sbar
-        gamma = autocovariance(X)
+        gamma = self._autocovariance(X)
         y = Y
         np.array(gamma)
         A = np.zeros((4,4)) + gamma[0] 
@@ -204,7 +221,7 @@ class ARAR:
         Test_accuracy = "Please provide test set as a data frame"
         if type(test_set) == type(self.df):
             actual = test_set['y']
-            Test_accuracy = accuracy_util(actual, pred)
+            Test_accuracy = self._accuracy(actual, pred)
         return Test_accuracy
     
     def plot(self, y_axis = 'Value'):
@@ -227,4 +244,47 @@ class ARAR:
         ax.fill_between(fc.index, fc.iloc[:, 1], fc.iloc[:, 4], color='gray')
         ax.set_xlabel('Date')
         ax.set_ylabel(y_axis)
-        plt.legend()  
+        plt.legend()
+    def _autocovariance(self, x):
+        """ Autocovariance of a time series. 
+        Args: 
+            x: A time series as a numpy array
+            """
+        max_lag = self.max_lag
+        n = len(x)
+        if(max_lag < n):
+            assert "The series too short"
+        xbar = np.mean(x)
+        def f(j):
+            a1 = (x[0:(n - j)] - xbar)
+            a2 = (x[(j):n]- xbar)
+            return(sum(a1*a2)/n)
+        out = [f(j) for j in range(0, max_lag+1)]
+        return(out)
+    
+    def _accuracy(self, actual, pred):
+        """Accuracy measures for a forecast model
+        Args:
+            actual : A dataframe same length as forecast horizon 'h' and same 
+            structure as imput dataframe 'df'.
+            pred : The mean forecast
+            
+        Returns:
+            Dict[str, str]: with following values:
+            1. Mean error
+            2. Root mean squared error
+            3. mean absolute error
+            4. Mean percentage error
+            5. Mean absolute percentage error """
+        error = actual - pred
+        pe = error/actual *100
+        me = np.mean(error)
+        mse = np.mean(np.power(error, 2))
+        mae = np.mean(np.abs(error))
+        mape = np.mean(np.abs(pe))
+        mpe = np.mean(pe)
+        rmse = np.sqrt(mse)
+        out = {'Mean error' : me, 'Root mean squared error' : rmse,
+               'Mean absolute error' : mae, 'Mean percentage error' : mpe,
+               'Mean absolute percentage error' : mape}
+        return out

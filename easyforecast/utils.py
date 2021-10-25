@@ -5,30 +5,7 @@ Created on Tue Feb  2 13:29:13 2021
 
 @author: Resul Akay
 """
-import sys
 import numpy as np
-
-def autocovariance(x, maxlag = 40):
-    """
-    Autocovariance of a time series.
-    
-    Args:
-        x: A time series as a numpy array
-        maxlag: Maximum lag 
-    
-    
-    """
-    n = len(x)
-    if(maxlag>=n):
-        sys.exit('maxlag > data. Data is too short')
-    xbar = np.mean(x)
-    def f(j):
-        a1 = (x[0:(n - j)] - xbar)
-        a2 = (x[(j):n]- xbar)
-        return(sum(a1*a2)/n)
-    out = [f(j) for j in range(0, maxlag+1)]
-    return(out)
-
 import pandas as pd
 from statsmodels.tsa.stattools import kpss
 import warnings
@@ -105,7 +82,7 @@ def nsdiffs(x, alpha = 0.05, m = None, max_D = 1):
     if is_constant(x):
         final_D = D
     if m ==1:
-        sys.exit("Non seasonal data")
+        assert "Non seasonal data"
     if m < 0 :
         print("I can't handle data with frequency less than 1.")
         print("Seasonality will be ignored.")
