@@ -48,10 +48,26 @@ Example of ARAR and ARIMA.auto_arima::
     arar.get_forecast()
     arar.accuracy(test_set = test)
     
-    test_series.plot() 
+    test_series.plot()
     arar.plot()
+
+Prophet forecast vs ARAR::
+
+    m = Prophet()
+    m.fit(train)
+    future = m.make_future_dataframe(periods=12, freq = "MS", include_history= False)
+    forecast = m.predict(future)
+    forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
     
-    # forecast using auto_arima
+    accuracy(np.array(test["y"]), np.array(forecast["yhat"]))
+
+    accuracy(np.array(test["y"]), np.array(arar_forecast["mean"]))
+
+MAPE ARAR = 1.9
+MAPE Prophet = 3.4
+    
+    
+Forecast using auto_arima::
     
     from easyforecast.arima import ARIMA
     arima = ARIMA(train, freq = "MS") 

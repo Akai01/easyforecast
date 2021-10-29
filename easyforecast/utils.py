@@ -109,8 +109,8 @@ def accuracy(actual, pred):
         
         
         Args:
-            actual : A dataframe same length as forecast horizon 'h' and same 
-            structure as imput dataframe 'df'.
+            actual : A numpy array of actual values.
+            pred : A numpy array of forecasted values
             
         Returns:
             Dict[str, str]: with following values:
