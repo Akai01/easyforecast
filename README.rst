@@ -16,8 +16,12 @@ Easy Forecast
 
 
 
-Time series forecastin in Python
+Forecasting methods and algorithms from:
+ Introduction to Time Series and Forecasting by Peter J. BrockwellRichard A. Davis.
 
+The state-space Arima models and other methods will be implemented in the future.
+
+For now, only ARAR algorithm is implemented from Peter J. BrockwellRichard A. Davis[2016]
 
 * Free software: MIT license
 * Install from GitHub "pip install git+https://github.com/Akai01/easyforecast"
