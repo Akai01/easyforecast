@@ -20,14 +20,18 @@ Time series forecastin in Python
 
 
 * Free software: MIT license
+* Install from GitHub "pip install git+https://github.com/Akai01/easyforecast"
 * Documentation: https://easyforecast.readthedocs.io/en/latest/
-
 * The usage:
 
 Forecasting using ARAR algorithm::
 
     from easyforecast.arar import ARAR
     import pandas as pd
+    from prophet import Prophet
+    from easyforecast.utils import accuracy
+    import numpy as np
+    
     
     df = pd.read_csv("https://raw.githubusercontent.com/Akai01/example-time-series-datasets/main/Data/retail.csv", sep= ",")
     df.head()
@@ -44,8 +48,8 @@ Forecasting using ARAR algorithm::
     
     # forecast using ARAR model
     arar = ARAR(train, h = 12, freq = "MS")
-    arar.forecast()
-    arar.get_forecast()
+    arar.forecast() 
+    arar_forecast = arar.get_forecast()
     arar.accuracy(test_set = test)
     
     test_series.plot()
@@ -56,10 +60,10 @@ Prophet forecast vs ARAR::
     m = Prophet()
     m.fit(train)
     future = m.make_future_dataframe(periods=12, freq = "MS", include_history= False)
-    forecast = m.predict(future)
-    forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
+    prophet_forecast = m.predict(future)
+    prophet_forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
     
-    accuracy(np.array(test["y"]), np.array(forecast["yhat"]))
+    accuracy(np.array(test["y"]), np.array(prophet_forecast["yhat"]))
 
     accuracy(np.array(test["y"]), np.array(arar_forecast["mean"]))
 
