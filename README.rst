@@ -24,7 +24,7 @@ Time series forecastin in Python
 
 * The usage:
 
-# Forecasting using ARAR algorithm::
+Forecasting using ARAR algorithm::
 
     from easyforecast.arar import ARAR
     import pandas as pd
@@ -51,7 +51,7 @@ Time series forecastin in Python
     test_series.plot()
     arar.plot()
 
-# Prophet forecast vs ARAR::
+Prophet forecast vs ARAR::
 
     m = Prophet()
     m.fit(train)
@@ -63,10 +63,11 @@ Time series forecastin in Python
 
     accuracy(np.array(test["y"]), np.array(arar_forecast["mean"]))
 
-## MAPE ARAR = 1.9 vs MAPE Prophet = 3.4
+MAPE ARAR = 1.9 vs MAPE Prophet = 3.4
+--------    
     
-    
-# Forecast using auto_arima::
+Forecast using auto_arima::
+
     
     from easyforecast.arima import ARIMA
     arima = ARIMA(train, freq = "MS") 
